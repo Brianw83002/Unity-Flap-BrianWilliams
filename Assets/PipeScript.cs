@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PipeScript : MonoBehaviour
 {
-    public float moveSpeed = 5;
     float DeadZone = -60;
-    
+    public LogicScript logic;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        logic = FindAnyObjectByType<LogicScript>();
     }
 
     // Update is called once per frame
@@ -24,6 +24,7 @@ public class PipeScript : MonoBehaviour
 
     void movePipe()
     {
+        float moveSpeed = logic.pipeMoveSpeed;
         //moves Pipes to the left of the screen @ moveSpeed. deltatime so it moves at time rather than fps
         transform.position = transform.position + (Vector3.left * moveSpeed) * Time.deltaTime;
     }

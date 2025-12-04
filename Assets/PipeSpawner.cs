@@ -4,13 +4,14 @@ using UnityEngine;
 public class PipeSpawner : MonoBehaviour
 {
     public GameObject pipe;     //refers to the pipe
-    public float spawnRate = 4; //timer counts to spawn rate, then spawns. (Lower number means faster spawn)
     private float timer = 0;
+    public LogicScript logic;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        logic = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
         //spawns a pip when started
         spawnPipe();
     }
@@ -18,8 +19,9 @@ public class PipeSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float spawnRate = logic.spawnRate; 
         //Spawn pipe when timer hits the spawnrate
-        if(timer < spawnRate)
+        if (timer < spawnRate)
         {
            timer += Time.deltaTime;
         }
