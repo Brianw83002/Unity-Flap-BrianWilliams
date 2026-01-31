@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PipeScript : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
     float DeadZone = -60;
     public LogicScript logic;
