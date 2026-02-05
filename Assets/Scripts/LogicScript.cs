@@ -18,6 +18,7 @@ public class LogicScript : MonoBehaviour
     public float pipeMoveSpeed = 8.0f;
     public float spawnRate = 6.0f; //timer counts to spawn rate, then spawns. (Lower number means faster spawn)
 
+    private float difficultyScale = 0.20f; //1.05f = 5% difficulty increase
 
 
 
@@ -36,14 +37,11 @@ public class LogicScript : MonoBehaviour
         playerScore = playerScore + 1;
         scoreText.text = playerScore.ToString();
 
+        //ADJUSTS SPAWN AND PIPE SPEED FOR DIFFICULTY
+        pipeMoveSpeed = pipeMoveSpeed * (1.0f + difficultyScale);
 
-        pipeMoveSpeed = pipeMoveSpeed + 0.5f;
-        if(spawnRate > 2.0)
-        {
-            spawnRate = spawnRate - 0.5f;
-        }
-        
-
+        // 5% faster spawning (less time between spawns)
+        spawnRate = spawnRate * (1.0f - difficultyScale); 
     }
 
     public void restartGame()
