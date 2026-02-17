@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class penisScript : MonoBehaviour
+public class playScript : MonoBehaviour
 {
     public Rigidbody2D myRigidbody;
     public float flapStrength;
     public LogicScript logic;
     public bool playerAlive = true;
+
+    public AudioSource playerAudio;
+    public AudioClip flapSound;
 
     //Kills player if position = these bounds
     int upperBound =  24;
@@ -14,19 +17,21 @@ public class penisScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        playerAudio.clip = flapSound;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //If SPACE is pressed jump
+        //If SPACE is pressed jump and play Audio
         if (Input.GetKeyDown(KeyCode.Space) == true && playerAlive)
         {
             myRigidbody.linearVelocity = Vector2.up * flapStrength;
+
+            playerAudio.Play(); //plays audio
         }
 
-        //Checks if Player is too high or too low, Ends game if too high
+        //Ends the Game if player is too high or too low
         if (transform.position.y >= upperBound || transform.position.y <= lowerBound)
         {
             // End the game
@@ -37,6 +42,7 @@ public class penisScript : MonoBehaviour
 
     }
 
+    //If it collides with anything solid, end the game
     private void OnCollisionEnter2D(Collision2D collision)
     {
         logic.gameOver();

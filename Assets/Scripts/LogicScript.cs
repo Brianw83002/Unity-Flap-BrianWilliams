@@ -26,7 +26,25 @@ public class LogicScript : MonoBehaviour
     void Awake()
     {
         // Set file path in persistent data path
-        highScoreFilePath = Application.persistentDataPath + "/highscore.txt";
+        // Get the folder where the game executable is located
+        string gameFolder = Directory.GetParent(Application.dataPath).FullName;
+
+        highScoreFilePath = Path.Combine(gameFolder, "highscore.txt");
+
+
+        // Build the full path to the high score file
+        highScoreFilePath = Path.Combine(gameFolder, "highscore.txt");
+
+        // Check if the file exists; if not, create it
+        if (!File.Exists(highScoreFilePath))
+        {
+            Debug.Log("highscore File not found");
+
+            // Create file with a default high score
+            File.WriteAllText(highScoreFilePath, "0");
+            Debug.Log("highscore.txt created");
+        }
+
         LoadHighScore();
         Debug.Log("High score file path: " + highScoreFilePath);
     }
@@ -42,14 +60,14 @@ public class LogicScript : MonoBehaviour
         pipeMoveSpeed = pipeMoveSpeed * (1.0f + difficultyScale);
 
         // 5% faster spawning (less time between spawns)
-        spawnRate = spawnRate * (1.0f - difficultyScale); 
+        spawnRate = spawnRate * (1.0f - difficultyScale);
     }
 
     public void restartGame()
     {
         SceneManager.LoadSceneAsync("Game");
     }
-    
+
     public void gameOver()
     {
         CheckHighScore();
@@ -58,6 +76,8 @@ public class LogicScript : MonoBehaviour
     }
 
 
+
+// ------------------- High Score -------------------
     void CheckHighScore()
     {
         if (playerScore > highScore)
@@ -67,7 +87,6 @@ public class LogicScript : MonoBehaviour
         }
     }
 
-    // ------------------- High Score -------------------
     void SaveHighScore()
     {
         try
@@ -81,8 +100,6 @@ public class LogicScript : MonoBehaviour
     }
 
 
-
-
     void LoadHighScore()
     {
         if (File.Exists(highScoreFilePath))
@@ -90,8 +107,20 @@ public class LogicScript : MonoBehaviour
             string data = File.ReadAllText(highScoreFilePath);
             int.TryParse(data, out highScore);
         }
+        else
+        {
+            Debug.LogError("Failed to save high score: ");
+        }
 
         highScoreText.text = highScore.ToString();
     }
+
+    public void Quit()
+    {
+        Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;
+        Debug.Log("Quitting Game");
+    }
+
 
 }
