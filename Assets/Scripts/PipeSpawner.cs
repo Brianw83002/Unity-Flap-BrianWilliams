@@ -19,6 +19,8 @@ public class PipeSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0) return; // pause check
+
         float spawnRate = logic.spawnRate; 
         //Spawn pipe when timer hits the spawnrate
         if (timer < spawnRate)

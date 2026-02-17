@@ -23,8 +23,10 @@ public class playScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0) return; // pause check
+
         //If SPACE is pressed jump and play Audio
-        if (Input.GetKeyDown(KeyCode.Space) == true && playerAlive)
+        if ((Input.GetKeyDown(KeyCode.Space) == true || Input.GetMouseButtonDown(0)) && playerAlive)
         {
             myRigidbody.linearVelocity = Vector2.up * flapStrength;
 

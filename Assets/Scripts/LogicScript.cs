@@ -118,7 +118,6 @@ public class LogicScript : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
-        UnityEditor.EditorApplication.isPlaying = false;
         Debug.Log("Quitting Game");
     }
 

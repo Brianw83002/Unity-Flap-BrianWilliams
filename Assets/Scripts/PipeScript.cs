@@ -15,6 +15,8 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 0) return; // pause check
+
         movePipe();
         if (transform.position.x < DeadZone)
         {
